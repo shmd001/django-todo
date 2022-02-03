@@ -132,5 +132,8 @@ dmypy.json
 # MacOS
 .DS_Store
 
-#VSCode
+# VSCode
 .vscode/launch.json
+
+# Django migrations
+migrations/
