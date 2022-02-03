@@ -5,6 +5,9 @@
         <th>
             Item
         </th>
+        <th>
+
+        </th>
     </tr>
 
     {% for task in tasks %}
@@ -12,11 +15,17 @@
         <td>
             {{ task.title }}
         </td>
+        <td>
+            <a href="{% url 'task' task.id %}">View</a>
+        </td>
     </tr>
     {% empty %}
     <tr>
         <td>
             No items available
+        </td>
+        <td>
+
         </td>
     </tr>
     {% endfor %}
