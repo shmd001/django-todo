@@ -1,5 +1,9 @@
-from django.http import HttpResponse
+"""Base app class based views"""
+
+from .models import Task
+from django.views.generic.list import ListView
 
 
-def index(request):
-    return HttpResponse("Hello, Niggers👋🏻")
+class TaskList(ListView):
+    model = Task
+    context_object_name = 'tasks'

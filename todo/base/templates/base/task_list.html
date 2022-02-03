@@ -1,0 +1,23 @@
+<h1>Tasks list:</h1>
+
+<table>
+    <tr>
+        <th>
+            Item
+        </th>
+    </tr>
+
+    {% for task in tasks %}
+    <tr>
+        <td>
+            {{ task.title }}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td>
+            No items available
+        </td>
+    </tr>
+    {% endfor %}
+</table>
