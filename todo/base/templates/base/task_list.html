@@ -1,5 +1,14 @@
 <h1>Tasks list:</h1>
 
+{% if request.user.is_authenticated %}
+<h4>{{ user.get_username }}</h4>
+<a href="">Sign out</a>
+{% else %}
+<h4>Not authenticated</h4>
+<a href="{% url 'signin' %}">Sign in</a>
+{% endif %}
+
+<hr>
 <h3>
     <a href="{% url 'task-create' %}">Create new task</a>
 </h3>
