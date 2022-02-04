@@ -47,6 +47,11 @@ class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        return context
+
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     """Task detail view"""
@@ -61,8 +66,14 @@ class TaskCreate(LoginRequiredMixin, CreateView):
 
     model = Task
     template_name = 'base/task_create.html'
-    fields = '__all__'
+    fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.user = self.request.user
+        task.save()
+        return HttpResponseRedirect(reverse_lazy('tasks'))
 
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
@@ -70,7 +81,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
 
     model = Task
     template_name = 'base/task_update.html'
-    fields = '__all__'
+    fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')
 
 
