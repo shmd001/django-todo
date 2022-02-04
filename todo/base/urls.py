@@ -1,7 +1,8 @@
 """URL routing for base app"""
 
 from django.urls import path
-from .views import TaskDelete, TaskList, TaskDetail, TaskCreate, TaskUpdate, UserSignin, UserSignout
+from .views import (TaskDelete, TaskList, TaskDetail, TaskCreate,
+                    TaskUpdate, UserSignin, UserSignout, UserSignup)
 
 urlpatterns = [
     path('', TaskList.as_view(), name='tasks'),
@@ -11,4 +12,5 @@ urlpatterns = [
     path('task-delete/<int:pk>/', TaskDelete.as_view(), name='task-delete'),
     path('signin/', UserSignin.as_view(), name='signin'),
     path('signout/', UserSignout.as_view(), name='signout'),
+    path('signup/', UserSignup.as_view(), name='signup'),
 ]

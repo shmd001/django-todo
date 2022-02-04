@@ -1,12 +1,30 @@
 """Base app class based views"""
 
+from django.http import HttpResponseRedirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login
 from .models import Task
+
+
+class UserSignup(CreateView):
+    """User register view"""
+
+    template_name = 'base/signup.html'
+    form_class = UserCreationForm
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+            return HttpResponseRedirect(reverse_lazy('tasks'))
+
+        return super().form_valid(form)
 
 
 class UserSignin(LoginView):
