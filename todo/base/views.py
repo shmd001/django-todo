@@ -26,6 +26,13 @@ class UserSignup(CreateView):
 
         return super().form_valid(form)
 
+    def get(self, request, *args, **kwargs):
+
+        if self.request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy('tasks'))
+
+        return super().get(request, *args, **kwargs)
+
 
 class UserSignin(LoginView):
     """User login view"""
