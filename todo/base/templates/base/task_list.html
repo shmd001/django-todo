@@ -1,5 +1,10 @@
 <h1>Tasks list:</h1>
 
+
+<h4>{{ user.get_username }}</h4>
+<a href="{% url 'signout' %}">Sign out</a>
+
+<hr>
 <h3>
     <a href="{% url 'task-create' %}">Create new task</a>
 </h3>
@@ -39,15 +44,6 @@
     <tr>
         <td>
             No items available
-        </td>
-        <td>
-
-        </td>
-        <td>
-
-        </td>
-        <td>
-
         </td>
     </tr>
     {% endfor %}
