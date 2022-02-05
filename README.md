@@ -2,4 +2,5 @@
 To-Do app with User Registration, Login, Search and full CRUD functionality.
 
 ## Usage
-https://user-images.githubusercontent.com/36565312/152638988-6f9c034b-9418-44d6-839a-07472f46739b.mov
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/36565312/152646171-458b7357-6f6a-40ed-9034-eccb19910793.gif)
+
