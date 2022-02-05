@@ -15,21 +15,21 @@ from .models import Task
 class UserSignup(CreateView):
     """User register view"""
 
-    template_name = 'base/signup.html'
+    template_name = "base/signup.html"
     form_class = UserCreationForm
 
     def form_valid(self, form):
         user = form.save()
         if user is not None:
             login(self.request, user)
-            return HttpResponseRedirect(reverse_lazy('tasks'))
+            return HttpResponseRedirect(reverse_lazy("tasks"))
 
         return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
 
         if self.request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('tasks'))
+            return HttpResponseRedirect(reverse_lazy("tasks"))
 
         return super().get(request, *args, **kwargs)
 
@@ -38,32 +38,31 @@ class UserSignin(LoginView):
     """User login view"""
 
     redirect_authenticated_user = True
-    next_page = reverse_lazy('tasks')
-    template_name = 'base/signin.html'
+    next_page = reverse_lazy("tasks")
+    template_name = "base/signin.html"
 
 
 class UserSignout(LogoutView):
     """User logout view"""
 
-    next_page = reverse_lazy('signin')
+    next_page = reverse_lazy("signin")
 
 
 class TaskList(LoginRequiredMixin, ListView):
     """Task list view"""
 
     model = Task
-    context_object_name = 'tasks'
+    context_object_name = "tasks"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context["tasks"] = context["tasks"].filter(user=self.request.user)
 
-        search = self.request.GET.get('search')
+        search = self.request.GET.get("search")
         if search:
-            context['tasks'] = context['tasks'].filter(
-                title__icontains=search)
+            context["tasks"] = context["tasks"].filter(title__icontains=search)
 
-        context['count'] = context['tasks'].filter(complete=False).count()
+        context["count"] = context["tasks"].filter(complete=False).count()
         return context
 
 
@@ -71,37 +70,37 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     """Task detail view"""
 
     model = Task
-    template_name = 'base/task.html'
-    context_object_name = 'task'
+    template_name = "base/task.html"
+    context_object_name = "task"
 
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     """Task creating view"""
 
     model = Task
-    template_name = 'base/task_create.html'
-    fields = ['title', 'description', 'complete']
-    success_url = reverse_lazy('tasks')
+    template_name = "base/task_create.html"
+    fields = ["title", "description", "complete"]
+    success_url = reverse_lazy("tasks")
 
     def form_valid(self, form):
         task = form.save(commit=False)
         task.user = self.request.user
         task.save()
-        return HttpResponseRedirect(reverse_lazy('tasks'))
+        return HttpResponseRedirect(reverse_lazy("tasks"))
 
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     """Task updating view"""
 
     model = Task
-    template_name = 'base/task_update.html'
-    fields = ['title', 'description', 'complete']
-    success_url = reverse_lazy('tasks')
+    template_name = "base/task_update.html"
+    fields = ["title", "description", "complete"]
+    success_url = reverse_lazy("tasks")
 
 
 class TaskDelete(LoginRequiredMixin, DeleteView):
     """Task deleting view"""
 
     model = Task
-    template_name = 'base/task_delete.html'
-    success_url = reverse_lazy('tasks')
+    template_name = "base/task_delete.html"
+    success_url = reverse_lazy("tasks")

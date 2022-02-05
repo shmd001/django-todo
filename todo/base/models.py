@@ -7,8 +7,7 @@ from django.contrib.auth.models import User
 class Task(models.Model):
     """Task Model"""
 
-    user = models.ForeignKey(
-        User, blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     complete = models.BooleanField(default=False)
@@ -17,4 +16,4 @@ class Task(models.Model):
     class Meta:
         """Meta class for ordering tasks"""
 
-        ordering = ['complete']
+        ordering = ["complete"]
