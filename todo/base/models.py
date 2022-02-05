@@ -17,4 +17,4 @@ class Task(models.Model):
     class Meta:
         """Meta class for ordering tasks"""
 
-        ordering = ['-created']
+        ordering = ['complete']

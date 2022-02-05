@@ -1,57 +1,64 @@
-<h1>Tasks list:</h1>
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="main-block mx-auto">
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Hello, {{ user.get_username }}👋🏻</h4>
+            <h5>You have {{count}} imcompleted tasks.</h5>
+            <a href="{% url 'signout' %}" class="link">Sign out</a>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8 col-8 search-area">
+                        <form method="get" class="card p-2">
+                            <div class="input-group">
+                                <input type="text" name='search' class="form-control" value="{{request.GET.search}}">
+                                <input type="submit" value='Search' class="btn">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4 col-4 reset">
+                        <div class="reset-search">
+                            <a href=" {% url 'tasks' %} ">Reset</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mx-auto text-center">
+                        <h4><a href="{% url 'task-create' %}">Add new task</a></h4>
+                    </div>
+                </div>
+                
+                <div class="row list-group">
+
+                    {% for task in tasks %}
+
+                    {% if not task.complete %}
+                    <div class="task imcompleted list-group-item list-group-item-action d-flex gap-3 py-3">
+                    {% else %}
+                    <div class="task completed list-group-item list-group-item-action d-flex gap-3 py-3">
+                    {% endif %}
+
+                        <div class="task-body">
+                            <a href="{% url 'task-update' task.id %}" class="task-title">{{ task.title }}</a>
+                            <small class="opacity-50 text-nowrap task-delete"><a href="{% url 'task-delete' task.id %}">❌</a></small>
+                        </div>
+
+                    </div>
+                    {% empty %}
+                        <h5>No tasks available 🥺</h5>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
 
 
-<h4>{{ user.get_username }}</h4>
-<a href="{% url 'signout' %}">Sign out</a>
 
-<hr>
-<h3>
-    <a href="{% url 'task-create' %}">Create new task</a>
-</h3>
-
-<h4>You have {{count}} imcompleted tasks.</h4>
-
-<form method="get">
-    <input type="text" name='search'>
-    <input type="submit" value='Search'>
-</form>
-
-<table>
-    <tr>
-        <th>
-            Item
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
-    {% for task in tasks %}
-    <tr>
-        <td>
-            {{ task.title }}
-        </td>
-        <td>
-            <a href="{% url 'task' task.id %}">View</a>
-        </td>
-        <td>
-            <a href="{% url 'task-update' task.id %}">Edit</a>
-        </td>
-        <td>
-            <a href="{% url 'task-delete' task.id %}">Delete</a>
-        </td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td>
-            No items available
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+{% endblock content %}
